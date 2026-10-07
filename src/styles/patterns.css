@@ -1,0 +1,101 @@
+/* Pattern field: connected clusters around the core, strata, editorial rule. */
+
+.pattern-field { position: relative; margin: 0 auto; }
+.pattern-field__title {
+  position: absolute; left: 16px; top: 0; margin: 0; z-index: 0;
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  font-size: clamp(44px, 13vw, 100px); line-height: .8; pointer-events: none;
+}
+.pattern-field__title span { color: transparent; -webkit-text-stroke: 1.2px var(--friction); }
+.pattern-field__links { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.pattern-field__orbit { fill: none; stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 2 6; }
+.pattern-field__link { stroke: var(--friction); stroke-width: 1; }
+.pattern-field__link--mesh { stroke: var(--radar-a22); stroke-dasharray: 1 4; opacity: .7 !important; }
+.pattern-field__empty { position: absolute; left: 0; right: 0; bottom: 12px; }
+
+.cluster {
+  position: absolute; left: 0; top: 0; width: 0; height: 0; padding: 0;
+  border: 0; background: none; color: var(--ink);
+  transition: opacity .3s ease;
+}
+.cluster:focus-visible { outline: none; }
+.cluster:focus-visible .cluster__mass { outline: 2px solid var(--radar); outline-offset: 4px; border-radius: 50%; }
+.cluster__mass {
+  position: absolute; left: 0; top: 0; display: block; min-width: 44px; min-height: 44px;
+  animation: cluster-drift 7s ease-in-out infinite alternate;
+  animation-delay: var(--wobble-delay, 0s);
+}
+@keyframes cluster-drift {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(var(--wobble), calc(var(--wobble) * -.6), 0); }
+  100% { transform: translate3d(calc(var(--wobble) * -.5), var(--wobble), 0); }
+}
+.cluster__label {
+  position: absolute; top: 0; width: 116px;
+  display: flex; flex-direction: column; gap: 3px;
+  font-size: var(--t-micro); letter-spacing: .08em; color: var(--muted);
+  text-shadow: 0 0 10px var(--bg-0), 0 0 2px var(--bg-0);
+}
+.pattern-field__label-leader { fill: none; stroke: var(--line-3); stroke-width: 1; stroke-dasharray: 1 3; }
+.cluster__label strong {
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  font-size: 10.5px; line-height: 1.2; letter-spacing: .04em; text-transform: uppercase; color: var(--ink);
+}
+.cluster--right .cluster__label { text-align: left; }
+.cluster--left .cluster__label { text-align: right; }
+.cluster--center .cluster__label { text-align: center; }
+.cluster--below .cluster__label { left: 0; top: var(--offset); width: 190px; transform: translateX(-50%); text-align: center; }
+.cluster.is-focused .cluster__label strong { color: var(--radar); font-size: 13px; }
+.cluster.is-dimmed { opacity: .42; }
+/* While one cluster is in focus the others step back to masses only (their reading stays in aria-label). */
+.cluster.is-dimmed .cluster__label { opacity: 0; transition: opacity .2s ease; }
+
+.cluster-reading { width: min(100%, 760px); margin: 6px auto 0; padding: 0 16px 8px; }
+.cluster-reading h2 {
+  margin: 8px 0 12px;
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  font-size: clamp(34px, 10vw, 62px); line-height: .86;
+}
+.cluster-reading__numbers { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; font-size: var(--t-micro); letter-spacing: .14em; color: var(--muted); }
+.cluster-reading__numbers b { margin-right: 4px; font-family: var(--font-display); font-weight: 800; font-size: 26px; letter-spacing: 0; color: var(--ink); }
+.cluster-reading__actions { margin: 16px 0 4px; padding: 0; list-style: none; }
+.cluster-reading__actions li { position: relative; margin-bottom: 8px; padding-left: 22px; max-width: 48ch; font-size: var(--t-body); line-height: 1.6; color: var(--ink-2); }
+.cluster-reading__actions li::before { content: '→'; position: absolute; left: 0; color: var(--friction); }
+
+.pattern-hint { width: min(100%, 760px); margin: 2px auto 0; padding: 0 16px; font-size: var(--t-label); letter-spacing: .05em; color: var(--dim); }
+
+.strata { width: min(100%, 760px); margin: 52px auto 0; padding: 0 16px; }
+.strata h2, .rule__text {
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+}
+.strata h2 { margin: 8px 0 18px; font-size: clamp(34px, 10vw, 62px); line-height: .86; }
+.strata__field { position: relative; }
+.strata__field svg { display: block; overflow: visible; }
+.strata__band { fill: none; stroke: var(--radar-a45); stroke-linecap: butt; }
+.strata__band.is-top { stroke: var(--friction); }
+.strata__labels { margin: 0; padding: 0; list-style: none; }
+.strata__labels li {
+  position: absolute; left: 0; right: 0;
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: var(--t-label); letter-spacing: .14em; color: var(--ink);
+}
+.strata__labels strong { font-family: var(--font-display); font-weight: 800; font-size: 18px; letter-spacing: .02em; }
+.strata__labels small { font-family: var(--font-mono); font-weight: 400; font-size: var(--t-micro); letter-spacing: .1em; color: var(--muted); }
+
+.rule { width: min(100%, 760px); margin: 60px auto 0; padding: 0 16px; }
+.rule__text { margin: 10px 0 0; font-size: clamp(52px, 16vw, 124px); line-height: .8; }
+.rule__text span { color: var(--friction); }
+.rule__line { position: relative; height: 36px; margin: -30px 0 12px; }
+.rule__wire { position: absolute; left: -16px; right: -16px; top: 50%; height: 1px; background: var(--friction); transform-origin: left center; }
+.rule__hit {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  padding: 2px 6px; background: var(--bg-0); color: var(--friction);
+  font-size: var(--t-label); letter-spacing: .1em; font-weight: 700;
+}
+.rule p { margin: 0; max-width: 46ch; font-size: var(--t-body); line-height: 1.7; color: var(--muted); }
+.rule p strong { color: var(--ink); font-weight: 600; }
+
+[data-motion='reduced'] .cluster__mass { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .cluster__mass { animation: none; }
+}

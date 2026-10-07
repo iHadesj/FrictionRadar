@@ -1,0 +1,68 @@
+/*
+ * FRICTION / RADAR — tonal system.
+ * Green behaves as field/signal/scan; red as interference/pressure/rupture.
+ * Everything else is a neutral ramp derived from the deep background.
+ */
+:root {
+  /* Ground */
+  --bg-0: #070807;
+  --bg-1: #0a0c09;
+  --bg-2: #0e110c;
+  --bg-3: #141811;
+
+  /* Lines & noise */
+  --line-0: #171b14;
+  --line-1: #232920;
+  --line-2: #343c2d;
+  --line-3: #4a5440;
+
+  /* Ink */
+  --ink: #f4f3e8;
+  --ink-2: #c9ccbd;
+  --muted: #959b8e;
+  --dim: #646a5d;
+
+  /* Radar (field / signal / normal activity) */
+  --radar: #d6ff3f;
+  --radar-2: #b4d936;
+  --radar-3: #6f8a1f;
+  --radar-4: #2c3a0b;
+  --radar-a04: rgba(214, 255, 63, 0.04);
+  --radar-a10: rgba(214, 255, 63, 0.1);
+  --radar-a22: rgba(214, 255, 63, 0.22);
+  --radar-a45: rgba(214, 255, 63, 0.45);
+
+  /* Friction (interference / pressure / rupture) */
+  --friction: #ff3d2e;
+  --friction-2: #d8321f;
+  --friction-3: #7d1d12;
+  --friction-4: #2d0d08;
+  --friction-a10: rgba(255, 61, 46, 0.1);
+  --friction-a25: rgba(255, 61, 46, 0.25);
+  --friction-a55: rgba(255, 61, 46, 0.55);
+
+  /* Type */
+  --font-display: 'Big Shoulders Display Variable', 'Arial Narrow', 'Roboto Condensed', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --t-micro: 9px;
+  --t-label: 10px;
+  --t-body: 12px;
+  --t-lead: 14px;
+
+  /* Safe areas */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --top-h: 58px;
+  --rail-h: 88px;
+
+  /* Layers */
+  --z-field: 0;
+  --z-page: 2;
+  --z-orbit: 4;
+  --z-top: 6;
+  --z-core: 7;
+  --z-nav: 8;
+  --z-readout: 9;
+  --z-aperture: 20;
+  --z-pulse: 30;
+}

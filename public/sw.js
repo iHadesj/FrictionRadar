@@ -1,5 +1,27 @@
-const CACHE = 'friction-radar-v1'
+const CACHE = 'friction-radar-v2'
 const SHELL = ['/', '/index.html', '/manifest.webmanifest']
+
+// Second-level assets referenced from the entry CSS/JS: bundled fonts and the
+// lazily imported Three.js chunk, so the radar is complete on the first offline open.
+const NESTED_ASSET = /(?:\/assets\/|\.\/)([\w.-]+\.(?:js|css|woff2))/g
+const SKIP_SUBSETS = /-(?:cyrillic|greek|vietnamese)(?:-ext)?-/
+
+async function precacheNested(cache, entries) {
+  const nested = new Set()
+  for (const url of entries) {
+    if (!/\.(?:js|css)$/.test(url)) continue
+    try {
+      const text = await (await cache.match(url)).text()
+      for (const match of text.matchAll(NESTED_ASSET)) {
+        if (!SKIP_SUBSETS.test(match[1])) nested.add(`/assets/${match[1]}`)
+      }
+    } catch {
+      // Missing entry in cache: runtime caching covers it later.
+    }
+  }
+  const pending = [...nested].filter((url) => !entries.includes(url))
+  await Promise.all(pending.map((url) => cache.add(url).catch(() => undefined)))
+}
 
 self.addEventListener('install', (event) => {
   event.waitUntil((async () => {
@@ -12,8 +34,11 @@ self.addEventListener('install', (event) => {
       const response = await fetch('/index.html', { cache: 'no-store' })
       const html = await response.clone().text()
       await cache.put('/index.html', response)
-      const assets = [...html.matchAll(/(?:src|href)=[\"'](\/assets\/[^\"']+)[\"']/g)].map((match) => match[1])
-      if (assets.length) await cache.addAll([...new Set(assets)])
+      const assets = [...new Set([...html.matchAll(/(?:src|href)=[\"'](\/assets\/[^\"']+)[\"']/g)].map((match) => match[1]))]
+      if (assets.length) {
+        await cache.addAll(assets)
+        await precacheNested(cache, assets)
+      }
     } catch {
       // Runtime caching still provides a graceful fallback if precache fails.
     }

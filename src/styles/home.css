@@ -1,0 +1,78 @@
+/* Home: one spatial composition around the core. */
+
+.home-stage { position: relative; }
+
+.home-title {
+  position: absolute; left: 16px; z-index: 1; margin: 0;
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  font-size: clamp(60px, 17vw, 136px); line-height: .8; letter-spacing: .005em;
+  pointer-events: none;
+}
+.home-title__line { display: block; }
+.home-title__cut { position: relative; display: inline-block; }
+.home-title__outline { color: transparent; -webkit-text-stroke: 1.3px var(--friction); }
+.home-title__fill { position: absolute; inset: 0; color: var(--friction); }
+.home-title__scan {
+  position: absolute; left: -16px; width: 100vw; height: 1px;
+  background: linear-gradient(90deg, var(--radar) 0%, var(--radar-a45) 45%, transparent 90%);
+  transform-origin: left center;
+}
+
+.home-lede {
+  position: absolute; left: 16px; margin: 0;
+  width: min(200px, 46vw);
+  font-size: var(--t-label); line-height: 1.6; letter-spacing: .02em; color: var(--muted);
+}
+
+.home-leader { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+.home-leader__path { fill: none; stroke: var(--radar-a45); stroke-width: 1; }
+.home-leader__path.is-hot { stroke: var(--friction-a55); }
+.home-leader__origin { fill: var(--radar); }
+.home-leader__origin.is-hot { fill: var(--friction); }
+
+.readout-annotation { position: absolute; left: 16px; right: 16px; }
+.readout-annotation__index { font-size: var(--t-label); letter-spacing: .2em; color: var(--radar); font-weight: 700; }
+.readout-annotation__text {
+  margin: 8px 0 0; font-size: 13px; line-height: 1.6; color: var(--ink);
+  text-shadow: 0 0 14px var(--bg-0), 0 0 3px var(--bg-0);
+}
+.readout-annotation__text span { color: var(--friction); }
+
+.stage-cue {
+  position: absolute; left: 16px; display: inline-flex; align-items: center; gap: 8px;
+  min-height: 44px; padding: 12px 0;
+  font-size: var(--t-micro); letter-spacing: .2em; color: var(--muted); text-decoration: none;
+}
+.stage-cue span { color: var(--radar); }
+
+/* Pressure zones */
+.zones { position: relative; width: min(100%, 1160px); margin: 0 auto; padding: 36px 16px 24px; }
+.zones__head h2 {
+  margin: 10px 0 28px;
+  font-family: var(--font-display); font-weight: 900; text-transform: uppercase;
+  font-size: clamp(40px, 12vw, 88px); line-height: .84;
+}
+.zones__trail { position: relative; margin: 0; padding: 0; list-style: none; }
+.zone-row { position: relative; min-height: 116px; }
+.zone-node {
+  position: relative; display: block; width: 100%; min-height: 116px;
+  padding: 0; background: none; border: 0; text-align: left; color: var(--ink);
+}
+.zone-node__crater { position: absolute; left: var(--x); }
+.zone-node__text {
+  position: relative; display: flex; flex-direction: column; gap: 5px;
+  padding: 24px 0 14px calc(var(--x));
+}
+.zone-node__rank { font-size: var(--t-micro); letter-spacing: .2em; color: var(--muted); }
+.zone-node__text strong { max-width: 30ch; font-size: 14px; line-height: 1.25; letter-spacing: .04em; text-transform: uppercase; }
+.zone-node__reading { font-size: var(--t-label); letter-spacing: .08em; color: var(--ink-2); }
+.zone-node:active strong, .zone-node:focus-visible strong { color: var(--radar); }
+
+@media (min-width: 1024px) {
+  .home-title { left: 28px; }
+  .home-lede { left: 28px; font-size: 11px; width: 260px; }
+  .readout-annotation { left: 28px; }
+  .readout-annotation__text { font-size: 15px; }
+  .stage-cue { left: 28px; }
+  .zones { padding-left: 28px; padding-right: 28px; }
+}

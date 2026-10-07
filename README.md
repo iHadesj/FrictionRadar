@@ -8,9 +8,21 @@ PWA React + TypeScript + IndexedDB para registrar e descobrir atritos recorrente
 - TypeScript
 - Vite
 - Dexie / IndexedDB (dados locais)
-- Three.js (assinatura visual do radar)
-- Framer Motion (transicoes e sheet de captura)
+- Three.js (nucleo 3D do radar, carregado sob demanda)
+- Framer Motion (campo persistente, transicoes espaciais, gestos)
+- Fontes locais via Fontsource: Big Shoulders Display + JetBrains Mono
 - Service Worker manual (offline + handler de Web Push)
+
+## Direcao visual: Organic Signal Cartography
+
+O app e um unico campo de radar persistente (`src/components/radar/RadarField.tsx`) que nunca e desmontado.
+Cada secao e um estado desse campo: o nucleo muda de pose por aba e, com o scroll, recua ate o fim do
+trilho de navegacao curvo. O nucleo e a acao de captura (toque ou segure) e se abre na `CaptureAperture`.
+
+- `src/app` — AppShell, geometria do campo, preferencias de movimento, store sobre o Dexie
+- `src/components` — campo/nucleo/contornos, navegacao curva, readout, marca
+- `src/features` — home (zonas de pressao), capture (rota de sinal), signals (stream), patterns (clusters), settings (radar control)
+- `src/motion` — springs, tokens e variantes compartilhadas
 
 ## Rodar
 

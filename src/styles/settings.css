@@ -1,0 +1,60 @@
+/* Radar control: a calibration layer — channels along one depth line, no cards. */
+
+.page-head--control { margin-bottom: 30px; }
+
+.channels { position: relative; width: min(100%, 760px); margin: 0 auto; padding: 0 16px 0 30px; }
+.channels__depth { position: absolute; left: 22px; top: 6px; bottom: 0; width: 2px; height: 100%; overflow: visible; }
+.channels__depth line { stroke: var(--line-2); stroke-width: 1; stroke-dasharray: 1 5; }
+
+.channel { position: relative; padding: 0 0 34px calc(var(--depth, 0) * 14px + 12px); }
+.channel__marker {
+  position: absolute; left: -12px; top: 5px;
+  width: 9px; height: 9px; border-radius: 50%;
+  border: 1.5px solid var(--radar); background: var(--bg-0);
+}
+.channel__marker::after {
+  content: ''; position: absolute; left: 8px; top: 3px; height: 1px;
+  width: calc(var(--depth, 0) * 14px + 8px); background: var(--radar-a45);
+}
+.channel__title { margin: 0 0 8px; font-family: var(--font-display); font-weight: 800; font-size: 24px; letter-spacing: .05em; }
+.channel__title span { margin-right: 6px; font-family: var(--font-mono); font-weight: 600; font-size: var(--t-label); letter-spacing: .16em; color: var(--radar); vertical-align: middle; }
+.channel__note { margin: 4px 0 6px; max-width: 46ch; font-size: 11px; line-height: 1.65; color: var(--muted); }
+
+.signal-toggle {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  min-height: 64px; padding: 6px 0; cursor: pointer;
+}
+.signal-toggle__text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.signal-toggle__text strong { font-size: 13px; font-weight: 600; letter-spacing: .02em; }
+.signal-toggle__text small { font-size: var(--t-label); line-height: 1.45; color: var(--muted); }
+.signal-toggle__control { position: relative; flex: none; display: flex; align-items: center; gap: 8px; }
+.signal-toggle__input {
+  position: absolute; inset: -6px -4px; width: calc(100% + 8px); height: calc(100% + 12px);
+  margin: 0; opacity: 0; cursor: pointer; z-index: 1;
+}
+.signal-toggle__control svg { display: block; overflow: visible; }
+.signal-toggle__rail { fill: none; stroke: var(--line-3); stroke-width: 1.4; }
+.signal-toggle__trace { fill: none; stroke: var(--radar); stroke-width: 2; }
+.signal-toggle__stop { fill: var(--line-3); }
+.signal-toggle__node { fill: var(--bg-0); stroke: var(--muted); stroke-width: 1.6; }
+.signal-toggle.is-on .signal-toggle__node { fill: var(--radar); stroke: var(--radar); }
+.signal-toggle__state { width: 26px; font-size: var(--t-label); letter-spacing: .14em; font-weight: 700; color: var(--muted); }
+.signal-toggle.is-on .signal-toggle__state { color: var(--radar); }
+.signal-toggle__input:focus-visible + svg { outline: 2px solid var(--radar); outline-offset: 4px; }
+
+.archive { margin-top: 2px; }
+.archive__records { position: relative; display: flex; flex-wrap: wrap; gap: 4px; padding: 10px 0 6px; max-width: 320px; }
+.archive__records i { width: 4px; height: 10px; background: var(--line-2); transition: background .12s linear; }
+.archive__records.is-sweeping i, .archive__records.is-ready i { background: var(--radar); }
+.archive__scan {
+  position: absolute; left: 0; right: 0; top: 50%; height: 1px;
+  background: var(--friction); transform-origin: left center;
+}
+.archive__state { margin: 2px 0 6px; font-size: var(--t-label); letter-spacing: .16em; font-weight: 700; color: var(--muted); }
+.archive__records.is-ready + .archive__state { color: var(--radar); }
+
+.status-lines { margin: 4px 0 8px; }
+.status-lines div { display: flex; gap: 12px; align-items: baseline; padding: 5px 0; }
+.status-lines dt { width: 118px; flex: none; font-size: var(--t-micro); letter-spacing: .16em; color: var(--muted); }
+.status-lines dd { margin: 0; font-size: 11px; letter-spacing: .08em; color: var(--ink); }
+.status-lines dd.is-friction { color: var(--friction); }
