@@ -1,5 +1,5 @@
-const CACHE = 'friction-radar-v2'
-const SHELL = ['/', '/index.html', '/manifest.webmanifest']
+const CACHE = 'friction-radar-v3'
+const SHELL = ['/', '/index.html', '/manifest.webmanifest', '/icons/icon.svg', '/icons/icon-192.png', '/icons/apple-touch-icon.png']
 
 // Second-level assets referenced from the entry CSS/JS: bundled fonts and the
 // lazily imported Three.js chunk, so the radar is complete on the first offline open.
